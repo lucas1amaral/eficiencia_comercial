@@ -7,35 +7,68 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
         #timer {
             font-size: 3em;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 1em;
         }
     </style>
 </head>
 <body>
     <div id="timer">45:00</div>
+    <div id="message">Vamos começar a nossa 1:1?</div>
+    <button id="startButton" onclick="startTimer()">Iniciar</button>
     <script>
         let timer = 2700; // 45 minutes in seconds
+        let timerInterval;
+
         const timerElement = document.getElementById('timer');
+        const messageElement = document.getElementById('message');
+        const startButton = document.getElementById('startButton');
 
         function updateTimer() {
             const minutes = Math.floor(timer / 60);
             const seconds = timer % 60;
             timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timer === 2700) {
+                messageElement.textContent = "Vamos começar a nossa 1:1?";
+            } else if (timer === 2700 - 600) {
+                messageElement.textContent = "Primeiro, vamos falar sobre o desenvolvimento de suas competências";
+            } else if (timer === 2700 - 1800) {
+                messageElement.textContent = "Agora é hora de passarmos pela pauta que preparamos para essa reunião";
+            } else if (timer === 2700 - 2400) {
+                messageElement.textContent = "Jogamos o jogo abertamente: é hora de você me dar feedback sobre minha postura e trabalho, e eu sobre a sua postura e trabalho";
+            } else if (timer === 2700 - 2700 + 300) {
+                messageElement.textContent = "Faltam 5 minutos para o fim da 1:1, vamos fechar os tópicos e reforçar os combinados que ficaram para a próxima reunião =]";
+            }
+
             if (timer > 0) {
                 timer--;
-                setTimeout(updateTimer, 1000);
             } else {
+                clearInterval(timerInterval);
                 alert("Tempo esgotado!");
             }
         }
 
-        updateTimer();
+        function startTimer() {
+            startButton.disabled = true;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
     </script>
 </body>
 </html>
