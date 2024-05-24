@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronômetro de 45 Minutos</title>
+    <title>1:1</title>
     <style>
         body {
             display: flex;
@@ -51,33 +51,30 @@
             if (timer < 0) {
                 displayTime = `-${displayTime}`;
                 timerElement.classList.add('negative');
+                messageElement.classList.add('negative');
+                messageElement.textContent = "Tempo esgotado!";
             } else {
                 timerElement.classList.remove('negative');
+                messageElement.classList.remove('negative');
+
+                if (timer >= 2100) {
+                    messageElement.innerHTML = "*juntos, respondam as perguntas abaixo sobre o desenvolvimento do liderado*<br>---<br>- Qual competência estamos desenvolvendo?<br>- Quais são as evidências que mostram que precisamos desenvolver essa competência?<br>- Quais são as evidências que gostaríamos de ter (que mostram que estamos no caminho certo)?<br>- Qual comportamento/projeto/atividade escolhemos para acompanhar nas próximas semanas, e que nos ajudará no desenvolvimento?";
+                } else if (timer >= 900) {
+                    messageElement.textContent = "Esse é o momento de passarmos pela pauta que preparamos para essa reunião";
+                } else if (timer >= 300) {
+                    messageElement.innerHTML = "*usem esse tempo para dar feedbacks (líder > liderado // liderado > líder)<br>anotem pontos relevantes para se lembrarem no futuro*<br>---<br>- Quais foram as evidências positivas observadas desde a última reunião?<br>- Quais foram as evidências negativas observadas desde a última reunião?";
+                } else {
+                    messageElement.textContent = "Encerrem o encontro lembrando e anotando os combinados que serão praticados até a próxima reunião";
+                }
             }
 
             timerElement.textContent = displayTime;
-
-            if (timer === 2700) {
-                messageElement.textContent = "Vamos começar a nossa 1:1?";
-            } else if (timer === 2700 - 600) {
-                messageElement.textContent = "Primeiro, vamos falar sobre o desenvolvimento de suas competências";
-            } else if (timer === 2700 - 1800) {
-                messageElement.textContent = "Agora é hora de passarmos pela pauta que preparamos para essa reunião";
-            } else if (timer === 2700 - 2400) {
-                messageElement.textContent = "Jogamos o jogo abertamente: é hora de você me dar feedback sobre minha postura e trabalho, e eu sobre a sua postura e trabalho";
-            } else if (timer === 2700 - 2700 + 300) {
-                messageElement.textContent = "Faltam 5 minutos para o fim da 1:1, vamos fechar os tópicos e reforçar os combinados que ficaram para a próxima reunião =]";
-            }
-
-            if (timer === 0) {
-                alert("Tempo esgotado!");
-            }
 
             timer--;
         }
 
         function startTimer() {
-            startButton.disabled = true;
+            startButton.style.display = 'none';
             timerInterval = setInterval(updateTimer, 1000);
         }
     </script>
