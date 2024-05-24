@@ -32,11 +32,11 @@
     </style>
 </head>
 <body>
-    <div id="timer">45:00</div>
+    <div id="timer">25:00</div>
     <div id="message">Vamos começar a nossa 1:1?</div>
     <button id="startButton" onclick="startTimer()">Iniciar</button>
     <script>
-        let timer = 2700; // 45 minutes in seconds
+        let timer = 1500; // 25 minutes in seconds
         let timerInterval;
 
         const timerElement = document.getElementById('timer');
@@ -52,19 +52,17 @@
                 displayTime = `-${displayTime}`;
                 timerElement.classList.add('negative');
                 messageElement.classList.add('negative');
-                messageElement.textContent = "Tempo esgotado!";
+                messageElement.textContent = "Encerrem o encontro lembrando e anotando os combinados que serão praticados até a próxima reunião";
             } else {
                 timerElement.classList.remove('negative');
                 messageElement.classList.remove('negative');
 
-                if (timer >= 2100) {
-                    messageElement.innerHTML = "*juntos, respondam as perguntas abaixo sobre o desenvolvimento do liderado*<br>---<br>- Qual competência estamos desenvolvendo?<br>- Quais são as evidências que mostram que precisamos desenvolver essa competência?<br>- Quais são as evidências que gostaríamos de ter (que mostram que estamos no caminho certo)?<br>- Qual comportamento/projeto/atividade escolhemos para acompanhar nas próximas semanas, e que nos ajudará no desenvolvimento?";
-                } else if (timer >= 900) {
-                    messageElement.textContent = "Esse é o momento de passarmos pela pauta que preparamos para essa reunião";
+                if (timer >= 900) {
+                    messageElement.innerHTML = "juntos, relembrem o PDI e respondam as perguntas:<br>- O que deu certo desde a última reunião?<br>- O que deu errado desde a última reunião";
                 } else if (timer >= 300) {
-                    messageElement.innerHTML = "*usem esse tempo para dar feedbacks (líder > liderado // liderado > líder)<br>anotem pontos relevantes para se lembrarem no futuro*<br>---<br>- Quais foram as evidências positivas observadas desde a última reunião?<br>- Quais foram as evidências negativas observadas desde a última reunião?";
+                    messageElement.textContent = "Esse é o momento de passarmos pela pauta que preparamos para essa reunião";
                 } else {
-                    messageElement.textContent = "Encerrem o encontro lembrando e anotando os combinados que serão praticados até a próxima reunião";
+                    messageElement.innerHTML = "Usem esse tempo para dar feedbacks (líder > liderado // liderado > líder)<br>anotem pontos relevantes para se lembrarem no futuro";
                 }
             }
 
