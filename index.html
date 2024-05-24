@@ -22,9 +22,13 @@
             font-size: 1.5em;
             margin-bottom: 20px;
         }
-        #startButton {
+        .button {
             padding: 10px 20px;
             font-size: 1em;
+            margin: 10px;
+        }
+        .hidden {
+            display: none;
         }
         .negative {
             color: red;
@@ -34,7 +38,8 @@
 <body>
     <div id="timer">25:00</div>
     <div id="message">Vamos começar a nossa 1:1?</div>
-    <button id="startButton" onclick="startTimer()">Iniciar</button>
+    <button id="startButton" class="button" onclick="startTimer()">Iniciar</button>
+    <button id="nextStageButton" class="button hidden" onclick="nextStage()">Próxima Etapa</button>
     <script>
         let timer = 1500; // 25 minutes in seconds
         let timerInterval;
@@ -42,6 +47,7 @@
         const timerElement = document.getElementById('timer');
         const messageElement = document.getElementById('message');
         const startButton = document.getElementById('startButton');
+        const nextStageButton = document.getElementById('nextStageButton');
 
         function updateTimer() {
             let minutes = Math.floor(Math.abs(timer) / 60);
@@ -69,11 +75,30 @@
             timerElement.textContent = displayTime;
 
             timer--;
+
+            if (timer >= 0) {
+                nextStageButton.classList.remove('hidden');
+            }
         }
 
         function startTimer() {
             startButton.style.display = 'none';
+            nextStageButton.classList.remove('hidden');
             timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function nextStage() {
+            if (timer > 900) {
+                timer = 899; // Skip to stage 2
+            } else if (timer > 300) {
+                timer = 299; // Skip to stage 3
+            } else if (timer > 0) {
+                timer = -1; // Skip to stage 4 (negative time)
+                timerElement.classList.add('negative');
+                messageElement.classList.add('negative');
+                messageElement.textContent = "Encerrem o encontro lembrando e anotando os combinados que serão praticados até a próxima reunião";
+            }
+            updateTimer();
         }
     </script>
 </body>
