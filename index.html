@@ -26,6 +26,9 @@
             padding: 10px 20px;
             font-size: 1em;
         }
+        .negative {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -41,9 +44,18 @@
         const startButton = document.getElementById('startButton');
 
         function updateTimer() {
-            const minutes = Math.floor(timer / 60);
-            const seconds = timer % 60;
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            let minutes = Math.floor(Math.abs(timer) / 60);
+            let seconds = Math.abs(timer) % 60;
+            let displayTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timer < 0) {
+                displayTime = `-${displayTime}`;
+                timerElement.classList.add('negative');
+            } else {
+                timerElement.classList.remove('negative');
+            }
+
+            timerElement.textContent = displayTime;
 
             if (timer === 2700) {
                 messageElement.textContent = "Vamos começar a nossa 1:1?";
@@ -57,12 +69,11 @@
                 messageElement.textContent = "Faltam 5 minutos para o fim da 1:1, vamos fechar os tópicos e reforçar os combinados que ficaram para a próxima reunião =]";
             }
 
-            if (timer > 0) {
-                timer--;
-            } else {
-                clearInterval(timerInterval);
+            if (timer === 0) {
                 alert("Tempo esgotado!");
             }
+
+            timer--;
         }
 
         function startTimer() {
